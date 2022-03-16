@@ -1,30 +1,30 @@
-import math
 import sys
-
 input = sys.stdin.readline
 
 n = int(input())
 k = list(map(int, input().split()))
 new_k = [[] for _ in range(n)]
-
-
-def find_prime(num):
-    global idx
-    for j in range(2, int(math.sqrt(num)+1)):
-        if num % j == 0:
-            new_k[idx].append(j)
-            find_prime(num // j)
-            return
-        elif j == int(math.sqrt(num)):
-            new_k[idx].append(num)
-    if num <= int(math.sqrt(num)+2):
-        new_k[idx].append(num)
-
-
+prime = []
 idx = 0
-for i in k:
-    find_prime(i)
-    idx += 1
 
-for i in new_k:
-    print(' '.join(map(str, i)))
+
+def find_prime(n):
+    sieve = [True] * n
+    m = int(n ** 0.5)
+    for i in range(2, m+1):
+        if sieve[i] is True:
+            for j in range(i+i, n, i):
+                sieve[j] = False
+
+    global prime
+    prime = [i for i in range(2, n) if sieve[i] is True]
+
+
+find_prime(max(k))
+
+print(new_k)
+
+
+
+
+
